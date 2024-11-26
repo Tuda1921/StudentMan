@@ -4,6 +4,6 @@
     <item
         android:id="@+id/menu_add_new"
         android:title="Thêm sinh viên"
-        android:icon="@drawable/baseline_delete_24"
+        android:icon="@android:drawable/ic_input_add"
         app:showAsAction="ifRoom" />
 </menu>
