@@ -19,11 +19,11 @@ class AddStudentActivity : AppCompatActivity() {
 
         // TODO: Su dung setResult de thiet lap ket qua tra ve
 
-        setResult(Activity.RESULT_CANCELED)
+//        setResult(Activity.RESULT_CANCELED)
 
         findViewById<Button>(R.id.button_ok).setOnClickListener {
-            intent.putExtra("hoten", editHoten.text.toString())
-            intent.putExtra("mssv", editMssv.text.toString())
+            intent.putExtra("studentName", editHoten.text.toString())
+            intent.putExtra("studentId", editMssv.text.toString())
             setResult(Activity.RESULT_OK, intent)
             finish()
         }

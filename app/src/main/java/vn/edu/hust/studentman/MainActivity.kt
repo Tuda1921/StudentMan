@@ -2,6 +2,7 @@ package vn.edu.hust.studentman
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuInflater
@@ -107,18 +108,35 @@ class MainActivity : AppCompatActivity() {
       else -> super.onContextItemSelected(item)
     }
   }
-
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
+
+    // Kiểm tra nếu kết quả là OK và dữ liệu không null
     if (resultCode == RESULT_OK && data != null) {
       when (requestCode) {
         100 -> { // Thêm mới sinh viên
-          val name = data.getStringExtra("studentName")!!
-          val id = data.getStringExtra("studentId")!!
-          students.add(StudentModel(name, id))
-          studentAdapter.notifyDataSetChanged()
+          // Lấy giá trị từ Intent một cách an toàn
+          val name = data.getStringExtra("studentName")
+          val id = data.getStringExtra("studentId")
+
+          // Log cả name và id
+          Log.d("onActivityResult", "Name: $name, ID: $id")
+
+          // Kiểm tra xem name và id có null không
+          if (name != null && id != null) {
+            // Thêm sinh viên vào danh sách
+            students.add(StudentModel(name, id))
+            studentAdapter.notifyDataSetChanged() // Cập nhật lại RecyclerView
+            Log.d("onActivityResult", "Sinh viên đã được thêm: Name = $name, ID = $id")
+          } else {
+            // Nếu name hoặc id null, log lỗi
+            Log.e("onActivityResult", "Dữ liệu sinh viên không hợp lệ (name hoặc id null)")
+          }
         }
       }
+    } else {
+      // Log nếu kết quả không hợp lệ hoặc data null
+      Log.e("onActivityResult", "Kết quả không hợp lệ hoặc data null. resultCode = $resultCode, data = $data")
     }
   }
 }
